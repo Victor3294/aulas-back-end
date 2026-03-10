@@ -12,7 +12,10 @@ public class MensagensTemporariasController {
 
     @PostMapping("/mensageiro/publica/{chave}")
     public ResponseEntity<String> publicarMensagem(@PathVariable String chave, @RequestBody Mensagem mensagem) {
-        mensagensTemporariasService.adicionarMensagem(chave,mensagem.conteudo());
+        if(mensagem.conteudo().isEmpty()){
+            return ResponseEntity.badRequest().body("Mensagem invalida");
+        }
+        mensagensTemporariasService.adicionarMensagem(chave,mensagem);
         return ResponseEntity.ok("Mensagem gravada");
     }
 

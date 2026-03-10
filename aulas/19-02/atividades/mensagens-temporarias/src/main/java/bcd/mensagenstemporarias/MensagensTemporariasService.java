@@ -2,6 +2,7 @@ package bcd.mensagenstemporarias;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 @Service
 public class MensagensTemporariasService {
@@ -10,20 +11,18 @@ public class MensagensTemporariasService {
 
     public MensagensTemporariasService(){}
 
-    public void adicionarMensagem(String chave, String conteudo){
-        Mensagem msg = new Mensagem(conteudo);
+    public void adicionarMensagem(String chave, Mensagem mensagem){
         if(!mapaDeMensagensTemporaria.containsKey(chave)){
             Deque<Mensagem> lista = new ArrayDeque<>();
             mapaDeMensagensTemporaria.put(chave, lista);
         }
-        mapaDeMensagensTemporaria.get(chave).add(new Mensagem(conteudo));
+        mensagem.tempoDeVida().plusSeconds(LocalDateTime.now());
+        mapaDeMensagensTemporaria.get(chave).add(mensagem);
     }
 
     public Mensagem listarMensagem(String chave){
         if(mapaDeMensagensTemporaria.containsKey(chave)){
-            Mensagem msg = new Mensagem(mapaDeMensagensTemporaria.get(chave).getLast().conteudo());
-            mapaDeMensagensTemporaria.get(chave).pop();
-            return msg;
+            if()
         }
         return null;
     }
